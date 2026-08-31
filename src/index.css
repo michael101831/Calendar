@@ -1,0 +1,48 @@
+:root {
+  --paper: #f2f1ec;
+  --paper-raised: #fbfaf6;
+  --ink: #23261f;
+  --ink-soft: #5b5f52;
+  --rule: #d8d5c8;
+  --marigold: #e2a339;
+  --marigold-soft: #f5deb1;
+  --teal: #2f6f62;
+  --teal-soft: #dbeae6;
+  --clay: #b5563a;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

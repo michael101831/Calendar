@@ -1,0 +1,123 @@
+.agenda {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 18px;
+  height: fit-content;
+}
+
+.agenda__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.agenda__date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.agenda__add {
+  border: none;
+  background: var(--teal);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.agenda__add:hover {
+  background: #255a4f;
+}
+
+.agenda__empty {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.agenda__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agenda__item {
+  border-left: 3px solid var(--marigold);
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 10px 12px;
+  position: relative;
+}
+
+.agenda__item-main {
+  cursor: pointer;
+}
+
+.agenda__item-title {
+  font-weight: 600;
+  margin: 0 0 2px;
+  font-size: 0.92rem;
+}
+
+.agenda__item-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+
+.agenda__item-notes {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.agenda__checklist {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.agenda__checklist label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.agenda__checklist-done {
+  text-decoration: line-through;
+  color: var(--ink-soft);
+}
+
+.agenda__delete {
+  margin-top: 8px;
+  border: none;
+  background: transparent;
+  color: var(--clay);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .agenda {
+    width: 100%;
+  }
+}
