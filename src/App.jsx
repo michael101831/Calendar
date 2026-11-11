@@ -1,13 +1,31 @@
 import { useState } from 'react'
+import AccountMenu from './components/AccountMenu/AccountMenu'
 import Calendar from './components/Calendar/Calendar'
 import EventList from './components/EventList/EventList'
 import EventModal from './components/EventModal/EventModal'
+import ProfileMenu from './components/ProfileMenu/ProfileMenu'
+import { useAuth } from './hooks/useAuth'
 import { useEvents } from './hooks/useEvents'
+import { useProfiles } from './hooks/useProfiles'
 import { today } from './utils/dateUtils'
 import './App.css'
 
 export default function App() {
-  const { events, addEvent, updateEvent, deleteEvent } = useEvents()
+  const { user, ready: authReady, error: authError, busy, signIn, createAccount, signOut } = useAuth()
+  const {
+    profiles,
+    activeProfile,
+    ready: profilesReady,
+    syncError,
+    createProfile,
+    selectProfile,
+    renameProfile,
+    deleteProfile,
+  } = useProfiles(user)
+  const { events, saveError, addEvent, updateEvent, deleteEvent } = useEvents(
+    user,
+    profilesReady ? activeProfile?.id : null,
+  )
 
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
@@ -51,8 +69,36 @@ export default function App() {
     })
   }
 
+  const notice = syncError || saveError
+
+  if (!authReady || (user && !profilesReady)) {
+    return (
+      <div className="app app--loading">
+        <p className="app__loading">{user ? 'Opening your calendars…' : 'Opening Daybook…'}</p>
+      </div>
+    )
+  }
+
+  if (!activeProfile) {
+    return (
+      <div className="app app--loading">
+        <p className="app__loading">{notice || 'Could not open your calendars.'}</p>
+        {user && (
+          <button type="button" className="app__retry" onClick={() => signOut()} disabled={busy}>
+            Sign out
+          </button>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="app">
+      {notice && (
+        <p className="app__alert" role="alert">
+          {notice}
+        </p>
+      )}
       <div className="app__layout">
         <Calendar
           year={year}
@@ -63,6 +109,31 @@ export default function App() {
           onOpenEvent={(event) => setModalState({ mode: 'edit', event })}
           onNavigate={navigateMonth}
           onToday={goToToday}
+          accountMenu={
+            <AccountMenu
+              user={user}
+              busy={busy}
+              error={authError}
+              onCreate={createAccount}
+              onSignIn={signIn}
+              onSignOut={signOut}
+            />
+          }
+          profileMenu={
+            <ProfileMenu
+              profiles={profiles}
+              activeProfile={activeProfile}
+              onSelect={selectProfile}
+              onCreate={createProfile}
+              onRename={renameProfile}
+              onDelete={deleteProfile}
+              hint={
+                user
+                  ? 'Each profile on this account keeps its own calendar.'
+                  : 'Each profile keeps its own calendar on this browser.'
+              }
+            />
+          }
         />
 
         <EventList

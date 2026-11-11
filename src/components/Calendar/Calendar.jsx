@@ -2,7 +2,18 @@ import CalendarGrid from '../CalendarGrid/CalendarGrid'
 import { MONTH_NAMES, buildMonthGrid } from '../../utils/dateUtils'
 import './Calendar.css'
 
-export default function Calendar({ year, month, events, selectedDate, onSelectDate, onOpenEvent, onNavigate, onToday }) {
+export default function Calendar({
+  year,
+  month,
+  events,
+  selectedDate,
+  onSelectDate,
+  onOpenEvent,
+  onNavigate,
+  onToday,
+  accountMenu,
+  profileMenu,
+}) {
   const days = buildMonthGrid(year, month)
 
   return (
@@ -15,6 +26,8 @@ export default function Calendar({ year, month, events, selectedDate, onSelectDa
           </h1>
         </div>
         <div className="calendar__nav">
+          {accountMenu}
+          {profileMenu}
           <button type="button" onClick={onToday} className="calendar__nav-btn calendar__nav-btn--text">
             Today
           </button>

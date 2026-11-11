@@ -38,6 +38,8 @@
 .calendar__nav {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
@@ -65,6 +67,10 @@
 }
 
 @media (max-width: 720px) {
+  .calendar__header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
   .calendar__title { font-size: 1.5rem; }
   .calendar { padding: 14px; }
 }
