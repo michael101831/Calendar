@@ -2,10 +2,10 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
-// Public web config for the Daybook Firebase project. Security comes from
-// Auth and the Firestore rules, not from hiding this key.
+// The browser key is injected at build time and limited to this site's
+// domains. Access is enforced by Auth and the Firestore rules.
 const firebaseConfig = {
-  apiKey: 'AIzaSyADY8Q3-3lQK74inTYtmSmdydWhGsqgP8A',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'calendar-project-fb.firebaseapp.com',
   projectId: 'calendar-project-fb',
   storageBucket: 'calendar-project-fb.firebasestorage.app',
