@@ -72,8 +72,36 @@ export function useEvents(user, profileId) {
     return []
   }
 
+  function importEvents(incoming) {
+    const fresh = []
+    setBucket((prev) => {
+      const have = new Set(currentEvents(prev).map((item) => item.id))
+      fresh.length = 0
+      for (const event of incoming) {
+        if (!event?.id || have.has(event.id)) continue
+        fresh.push(event)
+        have.add(event.id)
+      }
+      if (fresh.length === 0) return prev
+      return {
+        source: user ? 'cloud' : 'local',
+        profileId,
+        events: [...currentEvents(prev), ...fresh],
+      }
+    })
+    if (user && profileId) {
+      for (const event of fresh) {
+        saveCloudEvent(user.uid, profileId, event).catch((err) => {
+          console.error(err)
+          setSaveError(writeError(err))
+        })
+      }
+    }
+    return fresh.length
+  }
+
   function addEvent(event) {
-    const next = { ...event, id: crypto.randomUUID() }
+    const next = { ...event, id: event.id || crypto.randomUUID() }
     setBucket((prev) => ({
       source: user ? 'cloud' : 'local',
       profileId,
@@ -112,5 +140,5 @@ export function useEvents(user, profileId) {
     })
   }
 
-  return { events, saveError, addEvent, updateEvent, deleteEvent }
+  return { events, saveError, addEvent, importEvents, updateEvent, deleteEvent }
 }

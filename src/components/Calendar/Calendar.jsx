@@ -13,6 +13,7 @@ export default function Calendar({
   onToday,
   accountMenu,
   profileMenu,
+  localFindMenu,
 }) {
   const days = buildMonthGrid(year, month)
 
@@ -28,6 +29,7 @@ export default function Calendar({
         <div className="calendar__nav">
           {accountMenu}
           {profileMenu}
+          {localFindMenu}
           <button type="button" onClick={onToday} className="calendar__nav-btn calendar__nav-btn--text">
             Today
           </button>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AccountMenu from './components/AccountMenu/AccountMenu'
+import LocalFindImport from './components/LocalFindImport/LocalFindImport'
 import Calendar from './components/Calendar/Calendar'
 import EventList from './components/EventList/EventList'
 import EventModal from './components/EventModal/EventModal'
@@ -22,7 +23,7 @@ export default function App() {
     renameProfile,
     deleteProfile,
   } = useProfiles(user)
-  const { events, saveError, addEvent, updateEvent, deleteEvent } = useEvents(
+  const { events, saveError, addEvent, importEvents, updateEvent, deleteEvent } = useEvents(
     user,
     profilesReady ? activeProfile?.id : null,
   )
@@ -119,6 +120,7 @@ export default function App() {
               onSignOut={signOut}
             />
           }
+          localFindMenu={<LocalFindImport onImport={importEvents} />}
           profileMenu={
             <ProfileMenu
               profiles={profiles}
